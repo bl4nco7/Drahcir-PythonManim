@@ -2,11 +2,15 @@ from manim import *
 from manim_slides import Slide
 
 
-class Introduction(Slide):
-    def construct(self):
-        # Color Del Fondo
+class Portada(Slide):
+    def construct(self): 
+        # Se puede especificar el tipo para mayor claridad
+        # --- Configuración Inicial ---
         self.camera.background_color = WHITE
-        # Titulo
+        
+        # --- Creación de Textos (Agrupados y Simplificados) ---
+        
+        # 1. Título (Usando VGroup para centrar y alinear)
         titulo_texto = [
             "Métrica Assimétrica de Fubini-Study",
             "na Grassmanniana total"
@@ -19,6 +23,7 @@ class Introduction(Slide):
                 for t in titulo_texto
             ]
         ).arrange(DOWN, buff=0.5).shift(UP * 1.5) # Alinea verticalmente y sube el grupo
+        
         # 2. Autor y Universidad (Usando VGroup para alineación simple)
         autor_texto = Text(
             "Drahcir Alexander Blanco Garcia", 
@@ -33,6 +38,8 @@ class Introduction(Slide):
         
         creditos = VGroup(autor_texto, univ_texto).arrange(DOWN, buff=1.0).shift(DOWN * 2)
 
+        # --- Elemento Gráfico ---
+        
         # Rectángulo (usando .to_edge(UP) para fijarlo al borde superior)
         # Se fija el centro del rectangulo en y=3.7 para que el borde superior quede cerca del limite.
         rect1 = RoundedRectangle(
@@ -50,30 +57,36 @@ class Introduction(Slide):
             FadeIn(creditos),
             Create(rect1),
             run_time=3
-        ) 
-        self.next_slide()
-
-        # BETA DOS
-        
-        self.wipe(titulo, square)
-        self.play(FadeIn(dot))
-
-        self.next_slide(loop=True)
-        self.play(
-            MoveAlongPath(dot, square, rate_func=linear), run_time=2
         )
+        self.next_slide() 
 
-class WithTeX(Slide):
+        # Animación de Salida: usando Unwrite (desescritura) y FadeOut
+        self.play(
+            FadeOut(creditos, shift=DOWN), # Sale hacia abajo
+            Unwrite(titulo),
+            Uncreate(rect1),
+            run_time=2.5 # Animación de salida ligeramente más rápida
+        ) 
+        self.next_slide() 
+        # BETA DOS 
+
+class Adios(Slide):
     def construct(self):
-        tex, text = VGroup(
-            Tex(r"You can also use \TeX, e.g., $\cos\theta=1$"),
-            Text("which does not render like plain text"),
-        ).arrange(DOWN)
-
-        self.play(FadeIn(tex))
-        self.next_slide()
-
-        self.play(FadeIn(text, shift=DOWN))
+        self.next_slide(loop=True)
+        src = Text(
+            "¡Muchas Gracias!",
+            font_size=86,
+            color=BLUE_D
+        )
+        tar = Text(
+            "Muito Obrigado!",
+            font_size=86,
+            color=BLUE_D
+        )
+        
+        # 1. Animación Inicial (Escribir "Muchas Gracias!")
+        self.play(Write(src), run_time = 3) 
+        self.play(Transform(src, tar),run_time = 2)
 
 
 class Outro(Slide):
