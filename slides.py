@@ -3,8 +3,7 @@ from manim_slides import Slide
 
 class Portada(Slide):
     def construct(self):
-        # Se puede especificar el tipo para mayor claridad
-        # --- Configuración Inicial ---
+        # --- Color De Fondo (Colocar en Todas las esccenas)---
         self.camera.background_color = WHITE
 
         # --- Creación de Textos (Agrupados y Simplificados) ---
