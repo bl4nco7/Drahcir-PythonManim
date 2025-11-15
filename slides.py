@@ -67,6 +67,105 @@ class Portada(Slide):
             run_time=2.5 # Animación de salida ligeramente más rápida
         )
 
+## Primera Lamina 
+class lamina_1(Slide):
+    def construct(self):
+        # Define a cor de fundo
+        self.camera.background_color = WHITE 
+        # Plantilla LaTeX para justificación (si se necesita)
+        myTemplate = TexTemplate()
+        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
+        # Linea
+        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
+
+
+        text = Text("Álgebra exterior de Grassmann", color=BLUE_D, font_size=30)
+        text.move_to([text.width/2 - 6.5, 3.5, 0])
+        cursor = Rectangle(
+            color = GREY_A,
+            fill_color = GREY_A,
+            fill_opacity = 1.0,
+            height = 1.1,
+            width = 0.5,
+        ).move_to(text[0]) # Position the cursor
+
+        # Adicion titulo del Slide
+        self.add(linea)
+  
+
+        # Primeiro Paragrafo
+        paragrafo_1 = "A álgebra exterior de Grassmann com base em um espaço vetorial $\\textmd{V}$ sobre $\\mathbb{R}$, é o espaço $\\displaystyle \\bigwedge \\textmd{V}$ que se descompõe como:"
+        text1 = Tex(paragrafo_1, tex_template=myTemplate, tex_environment="justify",color=BLACK)
+        text1.font_size = 35
+        text1.move_to([text1.width/2 - 6.5, 2.3, 0])
+
+        # Algebra Graduada
+        equa = MathTex(
+            "\\bigwedge \\textmd{V} = \\bigoplus_{p=0}^n \\bigwedge^p \\textmd{V}",
+            "=\\mathbb{R} \\oplus \\textmd{V} \\oplus \\bigwedge^2 \\textmd{V} \\oplus \\cdots \\oplus \\bigwedge^p \\textmd{V}",
+            color=BLACK
+        ).scale(0.8)
+        equa.next_to(text1, DOWN) 
+        equa[0].shift(2*RIGHT)
+
+        self.play(FadeIn(equa[0],text1),TypeWithCursor(text, cursor),Blink(cursor, blinks=2)) 
+
+        self.next_slide()  # PASO DE LAMINA
+        self.play(equa[0].animate.shift(2*LEFT),run_time = 2)
+        self.play(Write(equa[1]))
+        self.next_slide() # PASO DE LAMINA
+
+        # Texto 2
+        texto2 = "com um produto exterior bilinear e associativo"
+        text2 = Tex(texto2, tex_template=myTemplate, tex_environment="justify",color=BLACK, font_size=35)
+        text2.next_to(equa, DOWN,aligned_edge=LEFT) # .align_to(equa, LEFT)
+        # .next_to(text1, DOWN, aligned_edge=LEFT) # Alinea con text1
+
+ 
+
+        # Ecua 2
+        equa2 = MathTex(
+             "\\wedge:\\bigwedge^p \\mathbb{R}^n\\times\\bigwedge^q \\mathbb{R}^n \\rightarrow\\bigwedge^{p+q} \\mathbb{R}^n",
+            color=BLACK
+        ).scale(0.8)
+        equa2.next_to(text2, DOWN) 
+
+        self.play(FadeIn(text2), Write(equa2)) 
+        self.next_slide() # PASO DE LAMINA
+        # Texto 3
+        texto3 = "este produto é alternante,"
+        text3 = Tex(texto3, tex_template=myTemplate, tex_environment="justify",color=BLACK)
+        text3.font_size = 35
+        text3.next_to(equa2, DOWN) 
+      
+
+        equa3 = MathTex(
+            "\\textmd{A} \\wedge \\textmd{B} = ", 
+            "\\textmd{A} \\wedge \\textmd{B}", # Este es el segundo argumento (índice 1)
+            ", \\quad \\text{se} \\quad \\textmd{A} \\in \\bigwedge^{p}\\: \\mathbb{R}^{n} \\: \\text{e} \\: \\textmd{B} \in \\bigwedge^{q}\\: \\mathbb{R}^{n}",
+            color=BLACK
+        ).scale(0.8)
+        equa3.next_to(text3, DOWN)
+
+        self.play(FadeIn(text3),Write(equa3[0]),Write(equa3[1]))   
+
+        parte_seleccionada = equa3[1]
+
+        # 2. Definir el objeto final (la expresión a la que se transforma)
+        equa4 = MathTex("(-1)^{pq} \\left( \\textmd{B} \\wedge \\textmd{A} \\right)",color=BLACK).scale(0.8)
+        
+        # 3. Posicionar equa4 SOBRE la parte seleccionada ANTES de la transformación.
+        # Esto asegura que el centro de equa4 coincida con el centro de parte_seleccionada.
+        equa4.move_to(parte_seleccionada.get_center()).shift(RIGHT)
+        t = equa3[2].shift(2*RIGHT)
+        self.next_slide() # PASO DE LAMINA
+        self.play(Transform(parte_seleccionada, equa4))
+        self.play(FadeIn(t))
+        self.wait() 
+        self.next_slide() # PASO DE LAMINA
+        self.play(FadeOut(text2,equa2,text3,equa3,t,text1,equa))
+        self.play(UntypeWithCursor(text, cursor),run_time = 2)
+
 # Ultima Lamina  
 
 class GraciasFinal(Slide):
