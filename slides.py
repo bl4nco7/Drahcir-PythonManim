@@ -164,7 +164,7 @@ class lamina_1(Slide):
         self.wait() 
         self.next_slide() # PASO DE LAMINA
         self.play(FadeOut(text2,equa2,text3,equa3,t,text1,equa))
-        self.play(UntypeWithCursor(text, cursor),run_time = 2)
+        # self.play(UntypeWithCursor(text, cursor),run_time = 2) # Se va a borrar en la lamina dos
 
 # Ultima Lamina  
 
