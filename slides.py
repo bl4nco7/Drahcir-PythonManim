@@ -160,7 +160,7 @@ class lamina_1(Slide):
 ######################## Lamina 2 #############################
 
 class lamina_2(Slide):
-        def construct(self):
+    def construct(self):
         # Define a cor de fundo
         self.camera.background_color = WHITE
         # Plantilla LaTeX para justificación (si se necesita)
@@ -303,16 +303,16 @@ class Referencias(Slide):
 ############################################ Ultima Lamina (Agradecimientos)  ########################################
 
 class GraciasFinal(Slide):
-  def construct(self): 
-      self.camera.background_color = WHITE
-      self.next_slide(loop=True)
-      src = Text(
-            "¡Muchas Gracias!",
-            font_size=86,
-            color=BLUE_D,
-            font='sans-serif'
-            ) 
-      tar = Text(
+    def construct(self): 
+        self.camera.background_color = WHITE
+        self.next_slide(loop=True)
+        src = Text(
+             "¡Muchas Gracias!",
+             font_size=86,
+             color=BLUE_D,
+             font='sans-serif'
+                  ) 
+        tar = Text(
             "Muito Obrigado!",
             font_size=86,
             color=BLUE_D,
@@ -320,5 +320,5 @@ class GraciasFinal(Slide):
             )
         
         # 1. Animación Inicial (Escribir "Muchas Gracias!")
-      self.play(Write(src), run_time = 3) 
-      self.play(Transform(src, tar),run_time = 2)
+        self.play(Write(src), run_time = 3) 
+        self.play(Transform(src, tar),run_time = 2)
