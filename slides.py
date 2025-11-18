@@ -196,7 +196,7 @@ class lamina_2(Slide):
         equa.next_to(text1, DOWN)
 
         self.play(FadeIn(text1))
-        self.play(Write(equa),run_time=2))
+        self.play(Write(equa),run_time=2)
         self.next_slide() # Paso de Lamina
 
         # Texto 2
