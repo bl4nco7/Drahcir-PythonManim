@@ -159,17 +159,19 @@ class lamina_1(Slide):
 ######################## Lamina 2 #############################
 
 class lamina_2(Slide):
-    def construct(self):
+        def construct(self):
         # Define a cor de fundo
-        self.camera.background_color = WHITE 
+        self.camera.background_color = WHITE
         # Plantilla LaTeX para justificación (si se necesita)
         myTemplate = TexTemplate()
         myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
         # Linea
-        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7) 
+        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
+        self.add(linea)
+        ######################################## USAR CN TODAS LAS LAMINAS ####################################### 
 
 
-        text = Text("Álgebra exterior de Grassmann", color=BLUE_D, font_size=30)
+        text = Text("Álgebra exterior de Grassmann", color=BLUE_D, font_size=30,font='sans-serif')
         text.move_to([text.width/2 - 6.5, 3.5, 0])
         cursor = Rectangle(
             color = GREY_A,
@@ -178,8 +180,8 @@ class lamina_2(Slide):
             height = 1.1,
             width = 0.5,
         ).move_to(text[0]) # Position the cursor
-        self.add(linea,text)
-        self.next_slide()
+        self.add(text)
+
         # Primeiro Paragrafo
         paragrafo_1 = "Seus elementos são multivetores, ou também chamados blade de grau $p$, ou $p$-blade, é"
         text1 = Tex(paragrafo_1, tex_template=myTemplate, tex_environment="justify",color=BLACK)
@@ -193,13 +195,15 @@ class lamina_2(Slide):
         ).scale(0.8)
         equa.next_to(text1, DOWN)
 
-        self.play(FadeIn(text1),Write(equa),run_time=2)
-        self.next_slide() # PASO DE LAMINA
+        self.play(FadeIn(text1))
+        self.play(Write(equa),run_time=2))
+        self.next_slide() # Paso de Lamina
+
         # Texto 2
         texto2 = "que representa um paralelepípedo gerado por $\\{v_1,\\ldots,v_p\\}$ e determina um subespaço $[\\textmd{A}] = \\text{span}\\{v_1,\\ldots,v_p\\}.$ O produto interno de $\\textmd{A} = v_1\\wedge\\cdots\\wedge v_p$ e $\\textmd{B}=w_1\\wedge\\cdots\\wedge w_p$, é "
         text2 = Tex(texto2, tex_template=myTemplate, tex_environment="justify",color=BLACK)
         text2.font_size = 35
-        text2.next_to(equa, DOWN)
+        text2.next_to(equa, DOWN) 
 
 
         # Ecua 2
@@ -208,21 +212,94 @@ class lamina_2(Slide):
             color=BLACK
         ).scale(0.8)
         equa2.next_to(text2, 2*DOWN)
-        self.play(FadeIn(text2),Write(equa2),run_time=2)
+        self.play(FadeIn(text2),Write(equa2),run_time=2) 
+        self.next_slide() # Paso de Lamina
 
         # Texto 3
-        texto3 = "a norma $\\| \\textmd{A} \\| = \sqrt{<\\textmd{A} , \\textmd{A}>}$ da o $p-$dimensional do paralelepípedo"
+        texto3 = "a norma $\\| \\textmd{A} \\| = \sqrt{<\\textmd{A} , \\textmd{A}>}$ dá o vlume $p-$dimensional do paralelepípedo"
         text3 = Tex(texto3, tex_template=myTemplate, tex_environment="justify",color=BLACK)
         text3.font_size = 35
-        text3.next_to(equa2, 2*DOWN) 
-        self.next_slide() # PASO DE LAMINA
-        self.play(FadeIn(text3),run_time=2)  
+        text3.next_to(equa2, 2*DOWN)
+
+        self.play(FadeIn(text3),run_time=2)
+        self.next_slide() # Paso de Lamina 
 
         self.play(FadeOut(text1,equa,text2,equa2,text3),run_time = 2)
 
+        self.play(UntypeWithCursor(text, cursor)) 
+
+        ############################################  Penultima Lamina (Referencias)  ########################################
+
+
+class Referencias(Scene):
+    def construct(self):
+        # Define a cor de fundo
+        self.camera.background_color = WHITE
+        # Plantilla LaTeX para justificación (si se necesita)
+        myTemplate = TexTemplate()
+        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
+        # Linea
+        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
+        self.add(linea)
+        ######################################## USAR CN TODAS LAS LAMINAS #######################################
+
+        # Título
+        text = Text("Referências", color=BLUE_D, font_size=30, font='sans-serif')
+        text.move_to([text.width/2 - 6.5, 3.5, 0])
+        cursor = Rectangle(
+            color = GREY_A,
+            fill_color = GREY_A,
+            fill_opacity = 1.0,
+            height = 1.1,
+            width = 0.5,
+        ).move_to(text[0])
+ 
+        self.play(TypeWithCursor(text, cursor))
+        self.play(Blink(cursor, blinks=2))
+        self.next_slide() # Paso de Lamina
+
+        # --- Lista de referências ---
+        refs = [
+            r"A.~L.~G. Mandolesi, \emph{Grassmann angles between real or complex subspaces}, arXiv:1910.00147 (2019).",
+            r"A.~L.~G. Mandolesi, \emph{Blade products and angles between subspaces}, \textit{Adv. Appl. Clifford Algebras} \textbf{31} (2021), no.~69.",
+            r"A.~C.~G. Mennucci, \emph{Geodesics in asymmetric metric spaces}, \textit{Anal. Geom. Metr. Spaces} \textbf{2} (2014), no.~1, 115--153.",
+            r"S.~E. Kozlov, \emph{Geometry of real Grassmann manifolds. Parts I, II, III}, \textit{J. Math. Sci.} \textbf{100} (2000), no.~3, 2239--2268.",
+            r"K.~Ye, L.~H. Lim, \emph{Schubert varieties and distances between subspaces of different dimensions}, \textit{SIAM J. Matrix Anal. Appl.} \textbf{37} (2016), no.~3, 1176--1197.",
+            r"K.~Ye, L.~H. Lim, \emph{Schubert varieties and distances between subspaces of different dimensions}, SIAM J. Matrix Anal. Appl. \textbf{37} (2016), no.~3, 1176--1197."
+        ]
+
+        # --- Crear referencias con numeración y colorear títulos ---
+        referencias = VGroup()
+
+        for i, t in enumerate(refs, start=1):
+            # Añadimos la enumeración [1], [2], ...
+            enumerated = rf"[{i}]~" + t
+
+            tex_ref = Tex(
+                enumerated,
+                tex_template=myTemplate,
+                tex_environment="justify",
+                font_size=28,
+                color=BLACK
+            )
+
+            referencias.add(tex_ref)
+
+        referencias.arrange(DOWN, aligned_edge=LEFT, buff=0.4)
+
+        # Posición agradable en la diapositiva
+        referencias.move_to([referencias.width/2 - 5.5, -0.25, 0])
+
+        self.play(FadeIn(referencias))
+
+        self.next_slide() # Paso de Lamina 
+ 
+
+        self.play(FadeOut(referencias))
         self.play(UntypeWithCursor(text, cursor))
 
-########################################################## Ultima Lamina  ########################################
+
+############################################ Ultima Lamina (Agradecimientos)  ########################################
 
 class GraciasFinal(Slide):
   def construct(self): 
@@ -231,13 +308,15 @@ class GraciasFinal(Slide):
       src = Text(
             "¡Muchas Gracias!",
             font_size=86,
-            color=BLUE_D
-        )
+            color=BLUE_D,
+            font='sans-serif'
+            ) 
       tar = Text(
             "Muito Obrigado!",
             font_size=86,
-            color=BLUE_D
-        )
+            color=BLUE_D,
+            font='sans-serif'
+            )
         
         # 1. Animación Inicial (Escribir "Muchas Gracias!")
       self.play(Write(src), run_time = 3) 
