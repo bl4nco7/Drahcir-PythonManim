@@ -153,6 +153,7 @@ class lamina_1(Slide):
         self.play(Transform(parte_seleccionada, equa4))
         self.play(FadeIn(t))
         self.wait()
+        self.next_slide() # Paso de Lamina
 
         self.play(FadeOut(text2,equa2,text3,equa3,t,text1,equa)) 
 
@@ -231,7 +232,7 @@ class lamina_2(Slide):
         ############################################  Penultima Lamina (Referencias)  ########################################
 
 
-class Referencias(Scene):
+class Referencias(Slide):
     def construct(self):
         # Define a cor de fundo
         self.camera.background_color = WHITE
