@@ -230,7 +230,7 @@ class lamina_2(Slide):
         self.play(UntypeWithCursor(text, cursor)) 
 
       ######################## Lamina 3 #############################
-class lamina_3(Slide):
+class lamina_3(Slide): # HOLA
     def construct(self):
         # Define a cor de fundo
         self.camera.background_color = WHITE
