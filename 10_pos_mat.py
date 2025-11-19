@@ -49,21 +49,15 @@ class Portada(Slide):
         # --- Ubicación del Rectangulo ---  
         creditos.next_to(rect1,3*DOWN)
          
-        # --- Animación --- 
-        self.play(
-            FadeIn(titulo), # Animación con escalado ligero
-            FadeIn(creditos),
-            DrawBorderThenFill(rect1),
-            run_time=3
-            )
+        # --- Animación ---          
+        self.add(titulo,creditos,rect1)
         
         self.next_slide()  
 
         # Animación de Salida: usando Unwrite (desescritura) y FadeOut
         self.play(
-           FadeOut(creditos, shift=DOWN), # Sale hacia abajo
-           Unwrite(titulo),
-           Uncreate(rect1),
-           run_time=2.5 # Animación de salida ligeramente más rápida
+           FadeOut(creditos,shift=DOWN),
+           Unwrite(titulo,shift=DOWN),
+           Uncreate(rect1,shift=DOWN), 
         )
 
