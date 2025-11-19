@@ -1,10 +1,12 @@
 from manim import *
 from manim_slides import Slide 
 
+self.camera.background_color = WHITE 
+
 class Portada(Slide):
     def construct(self):         
         # Define a cor de fundo
-        self.camera.background_color = WHITE 
+        # self.camera.background_color = WHITE 
         # 1. Título
         titulo_texto = [
             "Métrica Assimétrica de Fubini-Study",
