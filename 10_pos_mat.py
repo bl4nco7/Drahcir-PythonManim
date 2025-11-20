@@ -1,9 +1,10 @@
 from manim import *
-from manim_slides import Slide 
+from manim_slides import Slide, ThreeDSlide 
 
 class Portada(Slide):
     def construct(self):         
         # Define a cor de fundo
+        self.next_slide() # Proxima Slide  
         self.camera.background_color = WHITE 
         # 1. Título
         titulo_texto = [
@@ -50,7 +51,7 @@ class Portada(Slide):
         creditos.next_to(rect1,3*DOWN)
          
         # --- Animación ---          
-        self.add(titulo,creditos,rect1)
+        self.play(Create(titulo),Create(creditos),Create(rect1))
         
         self.next_slide() # Proxima Slide 
 
@@ -162,21 +163,77 @@ class lamina_2(Slide):
                        color=BLACK,
                    font_size=35)
         
-        
-        self.add(texto)
         self.play(FadeIn(texto))
 
-        self.wait()
+        self.next_slide() # Proxima Slide 
         ################### Ultima Parte #####################
 
         self.play(FadeOut(texto))
         self.play(UntypeWithCursor(text, cursor)) # Se va a quitar en la siguiente pagina 
+        self.next_slide(loop=True)
 
 ##################################################### Lamina 3 ##################################################### 
 
 
+# =========================================================
+# 8. DIAPOSITIVA: Referencias
+# =========================================================
+class Referencias(Slide): 
+    def construct(self):
+        # Define a cor de fundo 
+        self.camera.background_color = WHITE
+        # Plantilla LaTeX para justificación (si se necesita)
+        myTemplate = TexTemplate()
+        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
+        # Adicionar Linea de la cabecera 
+        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
+        self.add(linea)
+        ############################## Titulo de la Lamina #######################
+        text = Text("Referências", color=BLUE_D, font_size=30,font='sans-serif')
+        text.move_to([text.width/2 - 6.5, 3.5, 0])
+        cursor = Rectangle(
+            color = GREY_A,
+            fill_color = GREY_A,
+            fill_opacity = 1.0,
+            height = 1.1,
+            width = 0.5,
+        ).move_to(text[0]) # Position the curso
+        # Adicion titulo del Slide
+        self.play(TypeWithCursor(text, cursor))
+        self.play(Blink(cursor, blinks=1)) 
+        references_text = r"""
+        \begin{enumerate}
+            \item A.~L.~G. Mandolesi, \emph{Grassmann angles between real or complex subspaces}, arXiv:1910.00147 (2019).
+            \item A.~L.~G. Mandolesi, \emph{Blade products and angles between subspaces}, \textit{Adv. Appl. Clifford Algebras} \textbf{31} (2021), no.~69.
+            \item A.~C.~G. Mennucci, \emph{Geodesics in asymmetric metric spaces}, \textit{Anal. Geom. Metr. Spaces} \textbf{2} (2014), no.~1, 115--153.
+            \item S.~E. Kozlov, \emph{Geometry of real Grassmann manifolds. Parts I, II, III}, \textit{J. Math. Sci.} \textbf{100} (2000), no.~3, 2239--2268.
+            \item K.~Ye, L.~H. Lim, \emph{Schubert varieties and distances between subspaces of different dimensions}, \textit{SIAM J. Matrix Anal. Appl.} \textbf{37} (2016), no.~3, 1176--1197.
+        \end{enumerate}
+        """
+        
+        ref = Tex(references_text, 
+                  tex_template=myTemplate,
+                  tex_environment="justify",
+                  color=BLACK,
+                  font_size=35) # .to_edge(UP + LEFT)
+        self.play(FadeIn(ref)) 
+        
 
+        self.next_slide()
 
+        self.play(FadeOut(ref))
+        self.play(UntypeWithCursor(text, cursor)) # Se va a quitar en la siguiente pagina  
 
-
-
+# =========================================================
+#  Gracias Final
+# =========================================================
+class GraciasFinal(Slide):
+    def construct(self):
+        self.camera.background_color = WHITE
+        self.next_slide(loop=True)
+        
+        src = Text("¡Muchas Gracias!", font_size=86, color=BLUE_D, font='sans-serif')
+        tar = Text("Muito Obrigado!", font_size=86, color=BLUE_D, font='sans-serif')
+        
+        self.play(Write(src), run_time = 2)  
+        self.play(Transform(src, tar),run_time = 2) 
