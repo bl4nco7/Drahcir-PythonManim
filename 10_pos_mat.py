@@ -61,7 +61,7 @@ class Portada(Slide):
         # Animación de Salida: usando Unwrite (desescritura) y FadeOut
         self.play(
            FadeOut(creditos,shift=UP),
-           FadeOut(titulo,shift=UP),
+           FadeOut(titulo,shift=UP), 
            FadeOut(rect1,shift=UP),
         )
 
