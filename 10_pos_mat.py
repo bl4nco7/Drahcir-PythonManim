@@ -2,10 +2,12 @@ from manim import *
 from manim_slides import Slide, ThreeDSlide 
 
 class Portada(Slide):
-    def construct(self):         
+    def construct(self):
         # Define a cor de fundo
-        self.next_slide() # Proxima Slide  
-        self.camera.background_color = WHITE 
+        self.camera.background_color = WHITE
+        # Plantilla LaTeX para justificación (si se necesita)
+        myTemplate = TexTemplate()
+        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
         # 1. Título
         titulo_texto = [
             "Métrica Assimétrica de Fubini-Study",
@@ -38,202 +40,265 @@ class Portada(Slide):
         )
 
         creditos = VGroup(autor_texto,orientador, univ_texto).arrange(DOWN, buff=1)
-       
 
-        # --- Rectangulo ---  
+
+        # --- Rectangulo ---
         rect1 = RoundedRectangle(
             width=13,
             height=2.0,
             color=BLACK,
             fill_opacity=0.1
-        ).shift(UP * 2.5)  
-        # --- Ubicación del Rectangulo ---  
+        ).shift(UP * 2.5)
+        # --- Ubicación del Rectangulo ---
         creditos.next_to(rect1,3*DOWN)
-         
-        # --- Animación ---          
-        self.play(Create(titulo),Create(creditos),Create(rect1))
-        
-        self.next_slide() # Proxima Slide 
+
+        # --- Animación ---
+        self.add(titulo,creditos,rect1)
+        self.next_slide() # OTRO SLIDE
+
+        # self.next_slide()
 
         # Animación de Salida: usando Unwrite (desescritura) y FadeOut
         self.play(
-           FadeOut(creditos,shift=DOWN),
-           Unwrite(titulo,shift=DOWN),
-           Uncreate(rect1,shift=DOWN), 
+           FadeOut(creditos,shift=UP),
+           FadeOut(titulo,shift=UP),
+           FadeOut(rect1,shift=UP),
         )
 
-##################################################### Lamina 1 #####################################################
+        self.next_slide() # OTRO SLIDE
+        ################### SIGUIENTE SLIDE ###################
 
-class lamina_1(Slide):
-    def construct(self):
-        # Define a cor de fundo 
-        self.camera.background_color = WHITE
-        # Plantilla LaTeX para justificación (si se necesita)
-        myTemplate = TexTemplate()
-        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
-        # Adicionar Linea de la cabecera 
+        ################################################ Lamina 1 ################################################  
+
+
+        ################################################ Adicion de Lina ##########################################
         linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
-        self.add(linea)
-        ############################## Titulo de la Lamina #######################
-        text = Text("Álgebra exterior de Grassmann", color=BLUE_D, font_size=30,font='sans-serif')
-        text.move_to([text.width/2 - 6.5, 3.5, 0])
-        cursor = Rectangle(
-            color = GREY_A,
-            fill_color = GREY_A,
-            fill_opacity = 1.0,
-            height = 1.1,
-            width = 0.5,
-        ).move_to(text[0]) # Position the curso
-        # Adicion titulo del Slide
-        self.play(TypeWithCursor(text, cursor))
-        self.play(Blink(cursor, blinks=1))
-        ############################ Cuerpo de la Presentación #######################################
+        self.play(Create(linea))
+
+        titulo_1 = Text("Álgebra exterior de Grassmann", color=BLUE_D, font_size=30,font='sans-serif')
+        titulo_1.move_to([titulo_1.width/2 - 6.5, 3.5, 0]) 
+
+        self.play(Write(titulo_1)) 
+        self.next_slide() # OTRO SLIDE
 
 
-        texto = Tex(r"""A álgebra exterior de Grassmann com base em um espaço vetorial $\textmd{V}$ sobre $\mathbb{R}$, é o espaço $\bigwedge \textmd{V}$ que se descompõe como
+        texto1_1 = Tex(r"""A álgebra exterior de Grassmann com base em um espaço vetorial $\textmd{V}$ sobre $\mathbb{R}$, é o espaço $\bigwedge \textmd{V}$ que se descompõe como
         \[
         \bigwedge \textmd{V}=\bigoplus_{p=0}^n \bigwedge^p \textmd{V} = \mathbb{R} \oplus \textmd{V} \oplus \bigwedge^2 \textmd{V}\oplus \cdots \oplus \bigwedge^p \textmd{V}
         \]
         com um produto exterior bilinear e associativo
         \[
         \wedge: \bigwedge^p \mathbb{R}^n\times\bigwedge^q \mathbb{R}^n \rightarrow\bigwedge^{p+q} \mathbb{R}^n
-        \]  
+        \]
         este produto é alternante,
         \[
         \textmd{A} \wedge \textmd{B} =(-1)^{pq}\left(\textmd{B}\wedge \textmd{A}\right) \quad \text{se} \quad \textmd{A} \in \bigwedge^{p}\: \mathbb{R}^{n} \: \text{e} \: \textmd{B} \in \bigwedge^{q}\: \mathbb{R}^{n}
         \]""",
-                tex_template=myTemplate,
+                 tex_template=myTemplate,
              tex_environment="justify",
                        color=BLACK,
-                   font_size=35).next_to(linea,DOWN)
-        self.play(FadeIn(texto))
+                   font_size=35,
+                   # tex_to_color_map={"produto exterior": YELLOW}
+                    )
+        texto1_1.next_to(linea,DOWN)
+        self.play(FadeIn(texto1_1))    
+        self.next_slide() # OTRO SLIDE
 
-        self.next_slide() # Proxima Slide  
-        
-        ################### Ultima Parte #####################
+         ################### SIGUIENTE SLIDE ###################
+        self.play(FadeOut(texto1_1)) 
+        self.next_slide() # OTRO SLIDE
 
-        self.play(FadeOut(texto))
-        # self.play(UntypeWithCursor(text, cursor)) # Se va a quitar en la siguiente pagina 
-
-##################################################### Lamina 2 #####################################################
-
-class lamina_2(Slide):
-    def construct(self):
-        # Define a cor de fundo 
-        self.camera.background_color = WHITE
-        # Plantilla LaTeX para justificación (si se necesita)
-        myTemplate = TexTemplate()
-        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
-        # Adicionar Linea de la cabecera 
-        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
-        self.add(linea)
-        ############################## Titulo de la Lamina #######################
-        text = Text("Álgebra exterior de Grassmann", color=BLUE_D, font_size=30,font='sans-serif')
-        text.move_to([text.width/2 - 6.5, 3.5, 0])
-        cursor = Rectangle(
-            color = GREY_A,
-            fill_color = GREY_A,
-            fill_opacity = 1.0,
-            height = 1.1,
-            width = 0.5,
-        ).move_to(text[0]) # Position the curso
-        # Adicion titulo del Slide
-        self.add(text)
-        #self.play(TypeWithCursor(text, cursor)) # Ya viene de la lamina anterior
-        #self.play(Blink(cursor, blinks=1))
-        ############################ Cuerpo de la Presentación #######################################
-
-
-        texto = Tex(r"""Seus elementos são multivetores, ou também chamados blade de grau $p$, ou $p$-blade, é
+         ################################################ Lamina 2 ################################################ 
+        texto1_2 = Tex(r"""Seus elementos são multivetores, ou também chamados blade de grau $p$, ou $p$-blade, é
         \[
-        \textmd{A} = v_1\wedge\cdots\wedge v_p \quad \text{com} \quad  v_1,\ldots,v_p\in \mathbb{R}^n 
+        \textmd{A} = v_1\wedge\cdots\wedge v_p \quad \text{com} \quad  v_1,\ldots,v_p\in \mathbb{R}^n
         \]""",
         r"""que representa um paralelepípedo gerado por $\{v_1,\ldots,v_p\}$ e determina um subespaço $[\textmd{A}] = \text{span}\{v_1,\ldots,v_p\}.$
-        O produto interno de $\textmd{A} = v_1\wedge\cdots\wedge v_p$ e $\textmd{B}=w_1\wedge\cdots\wedge w_p$, é 
+        O produto interno de $\textmd{A} = v_1\wedge\cdots\wedge v_p$ e $\textmd{B}=w_1\wedge\cdots\wedge w_p$, é
         \[
         <\textmd{A} , \textmd{B}> = \det \big( <v_i , w_j> \big)
         \]""",
         r"""a norma
         \[
         \| \textmd{A} \| = \sqrt{<\textmd{A} , \textmd{A}>}
-        \] 
+        \]
         dá o volume $p$-dimensional do paralelepípedo.""",
                 tex_template=myTemplate,
              tex_environment="justify",
                        color=BLACK,
                    font_size=35)
+        self.play(FadeIn(texto1_2))     
+        self.next_slide() # OTRO SLIDE
+
+         ################### SIGUIENTE SLIDE ###################
+        self.play(FadeOut(texto1_2)) 
+        self.next_slide() # OTRO SLIDE
+
+
+        titulo_2 = Text("Ângulos entre subespaços", color=BLUE_D, font_size=30, font='sans-serif')
+        titulo_2.move_to([titulo_2.width/2 - 6.5, 3.5, 0])
+
+        self.play(Transform(titulo_1,titulo_2)) 
+        self.next_slide() # OTRO SLIDE
+
+
+        texto_2 = Tex(r"""Bases ortonormais $\textmd{B}_{\textmd{V}} = \{e_1,\ldots,e_p\}$ e $\textmd{B}_{\textmd{W}} = \{f_1,\ldots,f_q\}$ de $\textmd{V},\textmd{W}\subset\mathbb{R}^n$ são principais se
+        \begin{equation*}
+        <e_i , f_j>= \left\{ \begin{array}{lcc}
+                     0 &   \: \text{se}\:  & i\neq j \\
+                     \cos(\theta_i) & \: \text{se}\: & i= j,
+                              \end{array}
+                     \right.
+        \end{equation*}
+        Elas são ordenadas de modo que:
+        \[
+          0\leq\theta_1\leq\cdots\leq\theta_m\leq\frac{\pi}{2}
+        \]
+        onde é um ângulo principal cada
+        \[
+        \theta_i=\cos^{-1} (e_i \cdot f_i).
+        \]""",
+                tex_template=myTemplate,
+             tex_environment="justify",
+                       color=BLACK,
+                   font_size=35)
+
+        self.play(FadeIn(texto_2))
+        self.next_slide() # OTRO SLIDE
+
+
+        ################### SIGUIENTE SLIDE ###################
+
+
+
+        self.play(FadeOut(texto_2))
+        self.next_slide() # OTRO SLIDE
+
+
+        titulo_3 = Text("Grassmanniana e Grassmanniana total", color=BLUE_D, font_size=30, font='sans-serif') 
+        titulo_3.move_to([titulo_3.width/2 - 6.5, 3.5, 0])
+
+        self.play(Transform(titulo_1,titulo_3)) 
+        self.next_slide() # OTRO SLIDE
+
+
+        texto_3 = Tex(
+            r"""
+            Seja $\textmd{V}$ um espaço vetorial sobre $\mathbb{R}$ de dimensão $n$.
+            \begin{itemize}
+                \item A $p$-Grassmanniana $\textmd{Gr}_{p}(\mathbb{R}^n)$ se define como o conjunto \\
+                de sub-espaços vetoriais de dimensão $p$ do espaço vetorial $\textmd{V}$.
+                \item Grassmanniana total
+                 \[
+                    \textmd{Gr}(\mathbb{R}^n)=\bigcup_{p=0}^n \textmd{Gr}_{p}(\mathbb{R}^n).
+                 \]
+            \end{itemize}
+            """,
+            color=BLACK,
+            font_size = 35,
+            tex_environment="justify",
+            tex_template=myTemplate
+        ).next_to(linea, 2 * DOWN, aligned_edge=LEFT)
+        self.play(FadeIn(texto_3, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
+
+
+
+        self.play(FadeOut(texto_3, shift=DOWN)) 
+        self.next_slide() # OTRO SLIDE
+
+
+        titulo_4 = Text(r"Descrição do mergulho de Plücker", color=BLUE_D, font_size=30, font='sans-serif') 
+        titulo_4.move_to([titulo_4.width/2 - 6.5, 3.5, 0])
+
+        self.play(Transform(titulo_1,titulo_4)) 
+        self.next_slide() # OTRO SLIDE
+
+
+        texto_4 = Tex(r"""Consiste em associar a cada elemento $\textmd{V}\in\textmd{Gr}_{p}\left(\mathbb{R}^n\right)$, o produto
+        \[
+        v_1 \wedge \cdots \wedge v_p \in \bigwedge \mathbb{R}^{n}
+        \]
+        onde $\{v_1,\ldots , v_p\}$ é uma base de $\textmd{V}$. Como uma outra base de $\textmd{V}$ daria origem a um múltiplo deste produto, fica definida uma aplicação
+        \[
+        \textmd{Gr}_{p}\left(\mathbb{R}^n\right) \hookrightarrow \mathbb{P}\left(\:\bigwedge^{p+1}  \:\mathbb{R}^{n}\:\right).
+        \]
+        """,
+                tex_template=myTemplate,
+             tex_environment="justify",
+                       color=BLACK,
+                   font_size=35)
+        self.play(FadeIn(texto_4, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
+
+
+        self.play(FadeOut(texto_4, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
+
+
+        titulo_5 = Text("Distancia Fubini-Study", color=BLUE_D, font_size=30, font='sans-serif') 
+        titulo_5.move_to([titulo_5.width/2 - 6.5, 3.5, 0])
+
+        self.play(Transform(titulo_1,titulo_5))
+        self.next_slide() # OTRO SLIDE
+
+
+
+        texto_5 = Tex(r"""
+        \[
+        \textmd{d}_{\textmd{\textmd{F}\:\textmd{S}}}(\textmd{K},\textmd{L}) = \textmd{d}_{\textmd{F}\:\textmd{S}}\left(\text{span}\{u\}, \text{span}\{w\}\right) = \cos^{-1}\left(\dfrac{|<u,w>|}{\|u\|\cdot \|w\|}\right)
+        \]
+        com $v,w \in \mathbb{R}^n.$\\
+        Em termos dos principais ângulos, temos
+        \[
+        \textmd{d}_{\textmd{F\:S}} \left(\textmd{V},\textmd{W}\right) = \cos^{-1}\left( \prod_{i=1}^{p} \cos\left(\theta_i\right) \right)
+        \]
+        com $\textmd{V},\textmd{W}\in\textmd{Gr}_{p}\left(\mathbb{R}^n\right)$.
+        """,
+                tex_template=myTemplate,
+             tex_environment="justify",
+                       color=BLACK,
+                   font_size=35)
         
-        self.play(FadeIn(texto))
-
-        self.next_slide() # Proxima Slide 
-        ################### Ultima Parte #####################
-
-        self.play(FadeOut(texto))
-        self.play(UntypeWithCursor(text, cursor)) # Se va a quitar en la siguiente pagina 
-        self.next_slide(loop=True)
-
-##################################################### Lamina 3 ##################################################### 
+        self.play(FadeIn(texto_5, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
 
 
-# =========================================================
-# 8. DIAPOSITIVA: Referencias
-# =========================================================
-class Referencias(Slide): 
-    def construct(self):
-        # Define a cor de fundo 
-        self.camera.background_color = WHITE
-        # Plantilla LaTeX para justificación (si se necesita)
-        myTemplate = TexTemplate()
-        myTemplate.add_to_preamble(r"\usepackage{ragged2e}")
-        # Adicionar Linea de la cabecera 
-        linea = Line(np.array([-6.5, 3, 0]), np.array([6.5, 3, 0]), color=BLUE_D, stroke_width=0.7)
-        self.add(linea)
-        ############################## Titulo de la Lamina #######################
-        text = Text("Referências", color=BLUE_D, font_size=30,font='sans-serif')
-        text.move_to([text.width/2 - 6.5, 3.5, 0])
-        cursor = Rectangle(
-            color = GREY_A,
-            fill_color = GREY_A,
-            fill_opacity = 1.0,
-            height = 1.1,
-            width = 0.5,
-        ).move_to(text[0]) # Position the curso
-        # Adicion titulo del Slide
-        self.play(TypeWithCursor(text, cursor))
-        self.play(Blink(cursor, blinks=1)) 
-        references_text = r"""
-        \begin{enumerate}
-            \item A.~L.~G. Mandolesi, \emph{Grassmann angles between real or complex subspaces}, arXiv:1910.00147 (2019).
-            \item A.~L.~G. Mandolesi, \emph{Blade products and angles between subspaces}, \textit{Adv. Appl. Clifford Algebras} \textbf{31} (2021), no.~69.
-            \item A.~C.~G. Mennucci, \emph{Geodesics in asymmetric metric spaces}, \textit{Anal. Geom. Metr. Spaces} \textbf{2} (2014), no.~1, 115--153.
-            \item S.~E. Kozlov, \emph{Geometry of real Grassmann manifolds. Parts I, II, III}, \textit{J. Math. Sci.} \textbf{100} (2000), no.~3, 2239--2268.
-            \item K.~Ye, L.~H. Lim, \emph{Schubert varieties and distances between subspaces of different dimensions}, \textit{SIAM J. Matrix Anal. Appl.} \textbf{37} (2016), no.~3, 1176--1197.
-        \end{enumerate}
-        """
+        self.play(FadeOut(texto_5, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
+
+
+        titulo_6 = Text("Métrica assimétrica", color=BLUE_D, font_size=30, font='sans-serif') 
+        titulo_6.move_to([titulo_6.width/2 - 6.5, 3.5, 0])
+
+        self.play(Transform(titulo_1,titulo_6))
+        self.next_slide() # OTRO SLIDE
+
+
+        texto_6 = Tex(r"""Uma métrica assimétrica em um conjunto não-vazio $\textmd{M}$ é uma função\\ $\textmd{d}:\textmd{M}\times \textmd{M} \to [0,\infty)$ tal que, para $x,y,z\in\textmd{M}$,
+        	\begin{itemize}
+          		\item $\textmd{d}(x,y)=\textmd{d}(y,x)=0 \Leftrightarrow x=y$;
+              \item $\textmd{d}(x,z) \leq \textmd{d}(x,y)+\textmd{d}(y,z)$.
+         	\end{itemize}""",
+                tex_template=myTemplate,
+             tex_environment="justify",
+                       color=BLACK,
+                   font_size=35)
         
-        ref = Tex(references_text, 
-                  tex_template=myTemplate,
-                  tex_environment="justify",
-                  color=BLACK,
-                  font_size=35) # .to_edge(UP + LEFT)
-        self.play(FadeIn(ref)) 
-        
+        self.play(FadeIn(texto_6, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
 
-        self.next_slide()
 
-        self.play(FadeOut(ref))
-        self.play(UntypeWithCursor(text, cursor)) # Se va a quitar en la siguiente pagina  
+        self.play(FadeOut(texto_6, shift=DOWN))
+        self.next_slide() # OTRO SLIDE
 
-# =========================================================
-#  Gracias Final
-# =========================================================
-class GraciasFinal(Slide):
-    def construct(self):
-        self.camera.background_color = WHITE
-        self.next_slide(loop=True)
-        
-        src = Text("¡Muchas Gracias!", font_size=86, color=BLUE_D, font='sans-serif')
-        tar = Text("Muito Obrigado!", font_size=86, color=BLUE_D, font='sans-serif')
-        
-        self.play(Write(src), run_time = 2)  
-        self.play(Transform(src, tar),run_time = 2) 
+
+
+
+
+
+
+         
+
+        self.wait(5)
+
